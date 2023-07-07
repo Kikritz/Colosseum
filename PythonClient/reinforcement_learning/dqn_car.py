@@ -1,5 +1,6 @@
 import setup_path
-import gym
+# CHANGED (Import gymnasium as gym to keep the rest of the code unchanged)
+import gymnasium as gym
 import airgym
 import time
 

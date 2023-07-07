@@ -1,11 +1,12 @@
 import numpy as np
 import airsim
 
-import gym
-from gym import spaces
+# CHANGED (gym updated to gymnasium)
+import gymnasium
+from gymnasium import spaces
 
-
-class AirSimEnv(gym.Env):
+# CHANGED (Now inherits from gymnasium.Env)
+class AirSimEnv(gymnasium.Env):
     metadata = {"render.modes": ["rgb_array"]}
 
     def __init__(self, image_shape):

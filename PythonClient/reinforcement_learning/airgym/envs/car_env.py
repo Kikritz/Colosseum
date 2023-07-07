@@ -4,8 +4,9 @@ import numpy as np
 import math
 import time
 
-import gym
-from gym import spaces
+# CHANGED (gym updated to gymnasium)
+import gymnasium
+from gymnasium import spaces
 from airgym.envs.airsim_env import AirSimEnv
 
 
@@ -65,7 +66,8 @@ class AirSimCarEnv(AirSimEnv):
         time.sleep(1)
 
     def transform_obs(self, response):
-        img1d = np.array(response.image_data_float, dtype=np.float)
+        # CHANGED (np.float was deprecated in np 1.20, using float instead)
+        img1d = np.array(response.image_data_float, dtype=float)
         img1d = 255 / np.maximum(np.ones(img1d.size), img1d)
         img2d = np.reshape(img1d, (response.height, response.width))
 
@@ -139,10 +141,14 @@ class AirSimCarEnv(AirSimEnv):
         self._do_action(action)
         obs = self._get_obs()
         reward, done = self._compute_reward()
+        # CHANGED (gymnasium requires to return: observation, reward, terminated, truncated, info. The truncated value is set to False)
+        return obs, reward, done, False, self.state
 
-        return obs, reward, done, self.state
-
-    def reset(self):
+    
+    # CHANGED (Added seed)
+    def reset(self, seed: int = None):
         self._setup_car()
         self._do_action(1)
-        return self._get_obs()
+        # CHANGED (A second parameter (dict) containing info should be returned as second parameter as defined in gymnasium)
+        # EXTRA_INFO: The result returned by `env.reset()` should be `(obs, info)` by default, , where `obs` is a observation and `info` is a dictionary containing additional information.
+        return self._get_obs(), dict()

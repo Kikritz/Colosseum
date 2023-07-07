@@ -1,5 +1,6 @@
 import setup_path
-import gym
+# CHANGED (Import gymnasium as gym to keep the rest of the code unchanged)
+import gymnasium as gym
 import airgym
 import time
 
@@ -23,8 +24,13 @@ env = DummyVecEnv(
     ]
 )
 
+print(env.metadata)
+
 # Wrap env as VecTransposeImage to allow SB to handle frame observations
 env = VecTransposeImage(env)
+
+
+
 
 # Initialize RL algorithm type and parameters
 model = DQN(
