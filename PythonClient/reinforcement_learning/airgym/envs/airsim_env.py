@@ -7,7 +7,8 @@ from gymnasium import spaces
 
 # CHANGED (Now inherits from gymnasium.Env)
 class AirSimEnv(gymnasium.Env):
-    metadata = {"render.modes": ["rgb_array"]}
+    # CHANGED (Now, render_modes is utilized)
+    metadata = {"render_modes": ["rgb_array"]}
 
     def __init__(self, image_shape):
         self.observation_space = spaces.Box(0, 255, shape=image_shape, dtype=np.uint8)

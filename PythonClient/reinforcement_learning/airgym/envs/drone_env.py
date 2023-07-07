@@ -129,10 +129,11 @@ class AirSimDroneEnv(AirSimEnv):
                     - 0.5
                 )
                 reward = reward_dist + reward_speed
-
-        done = 0
+                
+        # CHANGED (Now done is expected to be a bool, not int)
+        done = False
         if reward <= -10:
-            done = 1
+            done = True
 
         return reward, done
 
@@ -144,7 +145,7 @@ class AirSimDroneEnv(AirSimEnv):
         return obs, reward, done, False, self.state
 
     # CHANGED (Added seed to meet gymnasium requirements)
-    def reset(self, seed: int = None):
+    def reset(self, seed: int = None, options = None):
         self._setup_flight()
         # CHANGED (A second parameter (dict) containing info should be returned as second parameter as defined in gymnasium)
         # EXTRA_INFO: The result returned by `env.reset()` should be `(obs, info)` by default, , where `obs` is a observation and `info` is a dictionary containing additional information.

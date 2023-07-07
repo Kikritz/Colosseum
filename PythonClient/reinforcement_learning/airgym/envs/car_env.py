@@ -126,14 +126,15 @@ class AirSimCarEnv(AirSimEnv):
             ) - 0.5
             reward = reward_dist + reward_speed
 
-        done = 0
+        # CHANGED (Now done is expected to be a bool, not int)
+        done = False
         if reward < -1:
-            done = 1
+            done = True
         if self.car_controls.brake == 0:
             if self.car_state.speed <= 1:
-                done = 1
+                done = True
         if self.state["collision"]:
-            done = 1
+            done = True
 
         return reward, done
 
@@ -146,7 +147,7 @@ class AirSimCarEnv(AirSimEnv):
 
     
     # CHANGED (Added seed)
-    def reset(self, seed: int = None):
+    def reset(self, seed: int = None, options = None):
         self._setup_car()
         self._do_action(1)
         # CHANGED (A second parameter (dict) containing info should be returned as second parameter as defined in gymnasium)
