@@ -24,12 +24,8 @@ env = DummyVecEnv(
     ]
 )
 
-print(env.metadata)
-
 # Wrap env as VecTransposeImage to allow SB to handle frame observations
 env = VecTransposeImage(env)
-
-
 
 
 # Initialize RL algorithm type and parameters
